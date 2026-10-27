@@ -8,6 +8,7 @@ using Xunit;
 
 namespace AutoMapping.Tests;
 
+[Collection("ProcessEnvironment")]   // one test sets DOTNET_ENVIRONMENT for the whole process, so it must not overlap SftpTests
 public class HardeningTests
 {
     private static readonly IMapper Mapper = new MapperConfiguration(c => c.CreateMap<OdOrder, OdOrderDto>()).CreateMapper();

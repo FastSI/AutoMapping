@@ -49,6 +49,7 @@ internal sealed class FakeSftpFactory : ISftpSessionFactory
     }
 }
 
+[Collection("ProcessEnvironment")]
 public class SftpTests
 {
     private static SftpOptions Options(Action<SftpOptions>? tweak = null)
