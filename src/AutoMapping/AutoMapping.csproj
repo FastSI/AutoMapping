@@ -1,0 +1,68 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFrameworks>net8.0;net9.0;net10.0</TargetFrameworks>
+    <LangVersion>latest</LangVersion>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <GenerateDocumentationFile>true</GenerateDocumentationFile>
+    <NoWarn>$(NoWarn);CS1591</NoWarn>
+    <TreatWarningsAsErrors>false</TreatWarningsAsErrors>
+    <Deterministic>true</Deterministic>
+
+    <!-- NuGet metadata -->
+    <PackageId>FastSI.AutoMapping</PackageId>
+    <Version>4.0.0</Version>
+    <PackageReleaseNotes>4.0.0: new optional alerts (AddAutoMappingAlerts) for error rate, slow mapping, slow compile, GC pressure, cache growth, suspected memory leak and failing report delivery; sinks: log, signed webhook, email (SMTP) and callback; no change to mapping or reporting code. 3.0.0: benchmarks re-measured on .NET 8 and .NET 10 against AutoMapper (time, speed-up, memory tables); README rewritten with quick start and feature table; release notes added. No change to the mapping engine since 2.0.0. 2.0.0: package renamed to FastSI.AutoMapping (namespace unchanged); faster collection mapping; LICENSE and icon included. Full history: CHANGELOG.md.</PackageReleaseNotes>
+    <Authors>FastSI</Authors>
+    <Company>FastSI</Company>
+    <Copyright>Copyright (c) 2026 FastSI</Copyright>
+    <Description>High-performance object-to-object mapper for .NET with an AutoMapper-style API, in one package: compiled expression-tree mappings, ML.NET fuzzy member matching, EF Core projection/Persist/key equality, OData query support, and scheduled diagnostics reports (exceptions, performance, memory-leak indicators) delivered to a folder, webhook or SFTP.</Description>
+    <PackageTags>alerts;monitoring;mapper;automapper;object-mapping;mapping;dto;expression-trees;ml.net;performance;projection;efcore;odata;diagnostics;reporting;sftp</PackageTags>
+    <PackageLicenseExpression>MIT</PackageLicenseExpression>
+    <PackageReadmeFile>README.md</PackageReadmeFile>
+    <PackageIcon>icon.png</PackageIcon>
+    <PackageProjectUrl>https://github.com/FastSI/AutoMapping</PackageProjectUrl>
+    <RepositoryUrl>https://github.com/FastSI/AutoMapping</RepositoryUrl>
+    <RepositoryType>git</RepositoryType>
+    <PublishRepositoryUrl>true</PublishRepositoryUrl>
+    <IncludeSymbols>true</IncludeSymbols>
+    <SymbolPackageFormat>snupkg</SymbolPackageFormat>
+    <EmbedUntrackedSources>true</EmbedUntrackedSources>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.ML" Version="5.0.1" />
+    <!-- SFTP report delivery. Only loaded when an SFTP destination is configured. -->
+    <PackageReference Include="SSH.NET" Version="2026.0.0" />
+  </ItemGroup>
+
+  <!-- Keep the DI abstractions in step with the target framework so consumers don't get downgrade warnings. -->
+  <ItemGroup Condition="'$(TargetFramework)' == 'net8.0'">
+    <PackageReference Include="Microsoft.Extensions.DependencyInjection.Abstractions" Version="10.0.14" />
+    <PackageReference Include="Microsoft.Extensions.Hosting.Abstractions" Version="10.0.14" />
+    <PackageReference Include="Microsoft.Extensions.Logging.Abstractions" Version="10.0.14" />
+  </ItemGroup>
+  <ItemGroup Condition="'$(TargetFramework)' == 'net9.0'">
+    <PackageReference Include="Microsoft.Extensions.DependencyInjection.Abstractions" Version="9.0.0" />
+    <PackageReference Include="Microsoft.Extensions.Hosting.Abstractions" Version="9.0.0" />
+    <PackageReference Include="Microsoft.Extensions.Logging.Abstractions" Version="9.0.0" />
+  </ItemGroup>
+  <ItemGroup Condition="'$(TargetFramework)' == 'net10.0'">
+    <PackageReference Include="Microsoft.Extensions.DependencyInjection.Abstractions" Version="10.0.0" />
+    <PackageReference Include="Microsoft.Extensions.Hosting.Abstractions" Version="10.0.0" />
+    <PackageReference Include="Microsoft.Extensions.Logging.Abstractions" Version="10.0.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include="..\..\README.md" Pack="true" PackagePath="\" />
+    <None Include="icon.png" Pack="true" PackagePath="\" />
+    <None Include="..\..\LICENSE" Pack="true" PackagePath="\" />
+    <None Include="..\..\CHANGELOG.md" Pack="true" PackagePath="\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <InternalsVisibleTo Include="AutoMapping.Tests" />
+  </ItemGroup>
+
+</Project>
